@@ -1,54 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Piedra, Papel o Tijeras</title>
-    <link rel="stylesheet" href="./src/styles.css" />
   </head>
   <body>
-    <div id="root">
-      <div id="container" class="container">
-        <div class="content">
-          <div>
-            <h1 class="title">Piedra, Papel o Tijeras</h1>
-            <h3 class="h3">The Game</h3>
-          </div>
-
-          <button class="button buttonStart">Start</button>
-        </div>
-      </div>
-    </div>
-    <div id="game" class="container hidden" style="flex-direction: column">
-      <div class="content">
-        <div class="wrapImg">
-          <img class="hand" src="src/assets/hand.svg" />
-          <img class="hand" src="src/assets/hand.svg" />
-        </div>
-        <button class="button btn" name="piedra">
-          <span class="wrapImgText"
-            ><img class="svg" src="src/assets/piedra.svg" /> Piedra</span
-          >
-          <span></span>
-        </button>
-        <button class="button btn" name="papel">
-          <span class="wrapImgText"
-            ><img class="svg" src="src/assets/papel.svg" />
-            Papel
-          </span>
-          <span></span>
-        </button>
-        <button class="button btn" name="tijeras">
-          <span class="wrapImgText"
-            ><img class="svg" src="src/assets/tijeras.svg" /> Tijeras</span
-          >
-          <span></span>
-        </button>
-      </div>
-      <button class="btnLanzar button hidden" name="lanzar" disabled="true">
-        Lanzar
-      </button>
-    </div>
-    <script src="./src/main.js"></script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
