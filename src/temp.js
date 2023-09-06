@@ -1,5 +1,3 @@
-const root = document.getElementById("root");
-
 const OPTIONS = {
   WIN: "Ganaste!",
   LOOSE: "Perdiste! ¿Quieres la revancha?",
@@ -24,19 +22,10 @@ const random = (min, max) => Math.ceil(Math.random() * (max - min) + min);
 
 document.addEventListener("click", ({ target }) => {
   if (target.nodeName === "BUTTON") {
-    const { textContent } = target;
     const container = document.querySelector("#container");
     const gameElement = document.querySelector("#game");
-    const text = textContent.toLowerCase();
     const buttonLanzar = document.querySelector('[name="lanzar"]');
     const keywords = ["piedra", "papel", "tijeras"];
-
-    if (text === "start") {
-      container.classList.toggle("hidden");
-      gameElement.classList.toggle("hidden");
-
-      return;
-    }
 
     const { name } = target;
 
