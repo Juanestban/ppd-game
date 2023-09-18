@@ -4,21 +4,33 @@ const OPTIONS = {
   TIE: "Empataste! ¿Quieres volverlo a intentar?",
 };
 
-const TRIES = {
-  PIEDRA_VS_PAPEL: OPTIONS.LOOSE,
-  PIEDRA_VS_TIJERAS: OPTIONS.WIN,
-  PIEDRA_VS_PIEDRA: OPTIONS.TIE,
-  PAPEL_VS_PAPEL: OPTIONS.TIE,
-  PAPEL_VS_TIJERAS: OPTIONS.LOOSE,
-  PAPEL_VS_PIEDRA: OPTIONS.WIN,
-  TIJERAS_VS_PIEDRA: OPTIONS.LOOSE,
-  TIJERAS_VS_PAPEL: OPTIONS.WIN,
-  TIJERAS_VS_TIJERAS: OPTIONS.TIE,
-};
+const keywords = ["piedra", "papel", "tijeras"];
+const random = (min, max) => Math.ceil(Math.random() * (max - min) + min);
+
+/**
+ * Simula el juego "piedra, papel o tijeras" entre el jugador y el oponente.
+ *
+ * @param {string} player - Movimiento del jugador.
+ * @returns {string} - Devuelve un mensaje del objeto OPTIONS según el resultado del juego.
+*/
+function game(player) {
+  const valueRandom = random(0, 2);
+  const opponent = keywords[valueRandom]
+
+  if (opponent === keywords[0] && player == keywords[2]) { 
+    return OPTIONS.LOOSE
+  } else if (opponent === keywords[1] && player === keywords[0]) { 
+    return OPTIONS.LOOSE
+  } else if (opponent === keywords[2] && player === keywords[1]) {
+    return OPTIONS.LOOSE
+  } else if (opponent === player) { 
+    return OPTIONS.TIE
+  }
+
+  return OPTIONS.WIN
+}
 
 let user = undefined;
-
-const random = (min, max) => Math.ceil(Math.random() * (max - min) + min);
 
 document.addEventListener("click", ({ target }) => {
   if (target.nodeName === "BUTTON") {
@@ -43,11 +55,9 @@ document.addEventListener("click", ({ target }) => {
       return;
     }
 
-    const value = random(0, 2);
-    const bot = keywords[value].toUpperCase();
     if (name === "lanzar") {
-      console.log(bot);
-      const result = TRIES[`${user.toUpperCase()}_VS_${bot}`];
+
+      const result = game(user)
       const finalOptions =
         result === OPTIONS.WIN ? alert(result) : confirm(result);
 
