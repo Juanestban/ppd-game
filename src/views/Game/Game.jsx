@@ -1,49 +1,66 @@
-import { useState } from 'react'
+import cn from 'classnames'
 
 import GameViewModel from './Game.viewModel'
+import { BUTTONS } from '../../constants'
+import HandIcon from '../../components/Hand'
 
-function Game({ onClick }) {
-  const [choose, setChoose] = useState(undefined)
-  const { result } = GameViewModel()
+function Game({ loops, onClick }) {
+  const { user, tried, handleClickOption, handleSubmit } = GameViewModel({ loops })
 
-  const handleChoose = ({ target: { name } }) => setChoose(name)
-
-  const handleSubmit = () => {
-    onClick('Home')
+  const handleClickSubmit = () => {
+    handleSubmit(() => {
+      onClick('Home')
+    })
   }
 
   return (
     <div id="game" className="container" style={{ flexDirection: 'column' }}>
       <div className="content">
         <div className="wrapImg">
-          <img className="hand" src="src/assets/hand.svg" />
-          <img className="hand" src="src/assets/hand.svg" />
+          <HandIcon width="100px" height="100px" fill="#fff" />
+          <HandIcon
+            width="100px"
+            height="100px"
+            fill="#fff"
+            style={{ transform: 'rotate(180deg)' }}
+          />
         </div>
-        <button className="button btn" name="piedra" onClick={handleChoose}>
-          <span className="wrapImgText">
-            <img className="svg" src="src/assets/piedra.svg" /> Piedra
-          </span>
-          <span></span>
-        </button>
-        <button className="button btn" name="papel" onClick={handleChoose}>
-          <span className="wrapImgText">
-            <img className="svg" src="src/assets/papel.svg" />
-            Papel
-          </span>
-          <span></span>
-        </button>
-        <button className="button btn" name="tijeras" onClick={handleChoose}>
-          <span className="wrapImgText">
-            <img className="svg" src="src/assets/tijeras.svg" /> Tijeras
-          </span>
-          <span></span>
-        </button>
+        <div style={{ display: 'flex', gap: 10 }}>
+          {Array.from({ length: loops }).map((_, index) => (
+            <span
+              key={index}
+              style={{
+                display: 'block',
+                width: 10,
+                height: 10,
+                borderRadius: '50%',
+                border: '1px solid white',
+                backgroundColor: tried === index ? 'white' : 'transparent',
+              }}
+            />
+          ))}
+        </div>
+        {BUTTONS.map(({ title, name, svg }, index) => (
+          <button
+            key={index}
+            name={name}
+            className={cn(user === name && 'selected', 'button btn')}
+            onClick={handleClickOption}
+          >
+            <span className="wrapImgText">
+              <img className="svg" src={svg} alt="image" /> {title}
+            </span>
+            <span></span>
+          </button>
+        ))}
       </div>
-      {choose && (
-        <button className="btnLanzar button" onClick={handleSubmit}>
-          Lanzar
-        </button>
-      )}
+      <button
+        className={cn('btnLanzar button', !user && 'isHidden')}
+        onClick={handleClickSubmit}
+        disabled={!user}
+      >
+        Lanzar
+      </button>
     </div>
   )
 }
